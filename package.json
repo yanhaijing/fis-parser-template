@@ -1,7 +1,7 @@
 {
     "name" : "fis-parser-template",
     "description" : "template.js的fis编译插件——一款javascript模板引擎",
-    "version" : "0.1.0",
+    "version" : "0.1.1",
     "author": {
         "name": "yanhaijing",
         "email": "yanhaijing@yeah.net",
