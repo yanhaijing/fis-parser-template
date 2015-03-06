@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="wrap"></div>
+<script>
+    //fis release -cpd ./v
+    var tpl = __inline('test.tmpl');
+    var html = tpl({
+        list: [
+            {
+                name: '颜海镜',
+                html: '<div></div>',
+                url: 'http://yanhaijing.com?颜海镜'
+            },
+            {
+                name: '颜海镜',
+                html: '<div></div>',
+                url: 'http://yanhaijing.com?颜海镜'
+            }
+        ]
+    });
+    document.getElementById('wrap').innerHTML = html;
+</script>
+</body>
+</html>

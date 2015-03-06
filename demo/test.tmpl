@@ -1,0 +1,12 @@
+<div>
+    <ul>
+        <#for (var i = 0; i < list.length; i++) {#>
+        <li>
+            <#var li = list[i];#>
+            <#:=li.name#>
+            <#=li.html#>
+            <#:u=li.url#>
+        </li>
+        <#}#>
+    </ul>
+</div>
