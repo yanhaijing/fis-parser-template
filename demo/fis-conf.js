@@ -19,8 +19,9 @@ fis.config.merge({
     settings: {
         parser: {
             template: {
-                'sTag': '<#',
-                'eTag': '#>'
+                'sTag': '<%',
+                'eTag': '%>',
+                'global': 'template'
             }
         }
     }

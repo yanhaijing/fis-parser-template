@@ -23,7 +23,8 @@
             parser: {
                 template: {
                     sTag: '<%',
-                    eTag: '%>'
+                    eTag: '%>',
+                    global: 'template'
                 }
             }
         }
