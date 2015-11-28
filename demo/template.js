@@ -1,5 +1,6 @@
 /*!
- * template.js v0.4.0 (https://github.com/yanhaijing/template.js)
+ * template.js v0.6.1 (https://github.com/yanhaijing/template.js)
+ * API https://github.com/yanhaijing/template.js/blob/master/doc/api.md
  * Copyright 2015 yanhaijing. All Rights Reserved
  * Licensed under MIT (https://github.com/yanhaijing/template.js/blob/master/MIT-LICENSE.txt)
  */
@@ -63,9 +64,6 @@
     function isObject(obj) {
         return getType(obj) === 'object';
     }
-    function isFunction(fn) {
-        return getType(fn) === 'function';
-    }
     function extend() {
         var target = arguments[0] || {};
         var arrs = Array.prototype.slice.call(arguments, 1);
@@ -92,9 +90,6 @@
     function compress(html) {
         return html.replace(/\s+/g, ' ').replace(/<!--[\w\W]*?-->/g, '');
     }
-    function trim(str) {
-        return isFunction(str.trim) ? str.trim() : str.replace(/^\s+|\s+$/g, '');
-    }
     function handelError(e) {
         var message = 'template.js error\n\n';
 
@@ -102,13 +97,16 @@
             message += '<' + key + '>\n' + e[key] + '\n\n';
         }
         message += '<message>\n' + e.message + '\n\n';
-        console && console.error && console.error(message);
+        typeof console !== 'undefined' && console.error && console.error(message);
 
         o.error(e);
-
-        return function () {
+        function error() {
             return 'template.js error';
-        };
+        }
+        error.toString = function () {
+            return '__code__ = "template.js error"';
+        }
+        return error;
     }
     function parse(tpl, opt) {
         var code = '';
@@ -118,33 +116,33 @@
         function parsehtml(line) {
             // 单双引号转义，换行符替换为空格
             line = line.replace(/('|")/g, '\\$1').replace(/\n/g, ' ');
-            return ';__r__.push("' + line + '")\n';
+            return ';__code__ += ("' + line + '")\n';
         }
         function parsejs(line) {              
             var html;
             if (line.search(/^=/) !== -1) {
                 //默认输出
                 html = line.slice(1);
-                html = escape ? ('__encodeHTML__(' + html + ')') : html;
-                return ';__r__.push(' + html + ')\n';
+                html = escape ? ('__encodeHTML__(typeof (' + html + ') === "undefined" ? "" : ' + html + ')') : html;
+                return ';__code__ += (' + html + ')\n';
             }
 
             if (line.search(/^:h=/) !== -1) {
                 //HTML转义输出
                 html = line.slice(3);
-                return ';__r__.push(__encodeHTML__(' + html + '))\n';
+                return ';__code__ += (__encodeHTML__(typeof (' + html + ') === "undefined" ? "" : ' + html + '))\n';
             }
 
             if (line.search(/^:=/) !== -1) {
                 //不转义
                 html = line.slice(2);
-                return ';__r__.push(' + html + ')\n';
+                return ';__code__ += (typeof (' + html + ') === "undefined" ? "" : ' + html + ')\n';
             }
 
             if (line.search(/^:u=/) !== -1) {
                 //URL转义
                 html = line.slice(3);
-                return ';__r__.push(encodeURI(' + html + '))\n';
+                return ';__code__ += (typeof (' + html + ') === "undefined" ? "" : encodeURI(' + html + '))\n';
             }
 
             //原生js
@@ -172,20 +170,20 @@
         var mainCode = parse(tpl, opt);
 
         var headerCode = '\n' + 
-        '    var r = (function (__data__, __encodeHTML__) {\n' + 
-        '        var __str__ = "", __r__ = [];\n' + 
+        '    var html = (function (__data__, __encodeHTML__) {\n' + 
+        '        var __str__ = "", __code__ = "";\n' + 
         '        for(var key in __data__) {\n' + 
         '            __str__+=("var " + key + "=__data__[\'" + key + "\'];");\n' + 
         '        }\n' + 
         '        eval(__str__);\n\n';
 
         var footerCode = '\n' + 
-        '        ;return __r__;\n' + 
+        '        ;return __code__;\n' + 
         '    }(__data__, __encodeHTML__));\n' + 
-        '    return r.join("");\n';
+        '    return html;\n';
 
         var code = headerCode + mainCode + footerCode;
-
+        code = code.replace(/[\r]/g, ' '); // ie 7 8 会报错，不知道为什么
         try {
             var Render = new Function('__data__', '__encodeHTML__', code); 
             Render.toString = function () {
@@ -250,7 +248,9 @@
     };
 
     template.__encodeHTML = encodeHTML;
+    template.__compress = compress;
+    template.__handelError = handelError;
     template.__compile = compile;
-    template.version = '0.4.0';
+    template.version = '0.6.1';
     return template;
 }));

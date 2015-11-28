@@ -10,6 +10,7 @@
 <script>
     //fis release -cpd ./v
     'use strict';
+    window.mytemplate = template;
     var tpl = __inline('test.tmpl');
     var html = tpl({
         a: 5,
@@ -17,16 +18,19 @@
         list: [
             {
                 name: '颜海镜',
-                html: '<div></div>',
+                html: '<div>div</div>',
                 url: 'http://yanhaijing.com?颜海镜'
             },
             {
-                name: '颜海镜',
-                html: '<div></div>',
+                name: '颜海镜2',
+                html: '<p>这里是段落哦</p>',
                 url: 'http://yanhaijing.com?颜海镜'
             }
         ]
     });
+    console.log(tpl.toString());
+    console.log('==================================');
+    console.log(html);
     document.getElementById('wrap').innerHTML = html;
 </script>
 </body>

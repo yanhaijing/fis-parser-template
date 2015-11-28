@@ -1,6 +1,6 @@
 /*
- * fis
- * http://web.baidu.com/
+ * fis-parser-template
+ * https://github.com/yanhaijing/fis-parser-template
  */
 
 'use strict';
@@ -10,10 +10,12 @@ var template = require('template_js');
 module.exports = function(content, file, conf){
     template.config(conf);
     var global = conf.global || 'template';
-    // 获取编译源码，并压缩成一行
-    content = template.__compile(content).toString();
+    var compress = conf.compress || false;
 
-    var code = '"use strict";var __r__ = [];' + content + ';return __r__.join("")';
+    // 获取编译源码，并压缩成一行
+    var code = template.__compile(content).toString();
+
+    code = '"use strict";var __code__ = "";' + code + ';return __code__';
 
     // __##1##__ 单引号 js语句中的单引号
     // __##2##__ 转义单引号 html语句中的双引号
@@ -26,21 +28,35 @@ module.exports = function(content, file, conf){
         .replace(/\"/g, '##3##')
         .replace(/\n/g, '');
 
-    var Render = function (data) {
+    var render = function render(data) {
         'use strict';
-        var keyArr = [];
-        var valArr = [];
+        var keyArr = [], valArr = [];
+        data = data || {};
         data.__encodeHTML__ = window['__global__'].__encodeHTML;
         for(var key in data) {
             keyArr.push('"' + key + '"');
             valArr.push(data[key]);
         }
         var source = 'new Function(' + keyArr.join(',') + ', "__placeholder__")';
-        var fn = eval(source);
-        return fn.apply(null, valArr);
+        try {
+            var fn = eval(source);
+            var html = fn.apply(null, valArr);
+        } catch (e) {
+            e.name = 'RenderError';
+            e.tpl = '__tpl__';
+            window['__global__'].__handelError(e);
+            return 'template.js error';
+        }
+        __compress__
+        return html;
     }
 
-    var source = Render.toString().replace('__placeholder__', code).replace('__global__', global);
+    var source = render.toString();
+
+    source = source.replace('__compress__', compress ? 'html = window["__global__"].__compress(html);' : '');
+    source = source.replace('__placeholder__', code);
+    source = source.replace('__tpl__', file.fullname);
+    source = source.replace(/__global__/g, global);
     
     // 将引号替换回来，不要问我为什么知道，试出来的
     source = source

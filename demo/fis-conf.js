@@ -21,7 +21,8 @@ fis.config.merge({
             template: {
                 'sTag': '<%',
                 'eTag': '%>',
-                'global': 'template'
+                'global': 'mytemplate',
+                'compress': true
             }
         }
     }
