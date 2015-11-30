@@ -55,7 +55,7 @@ module.exports = function(content, file, conf){
 
     source = source.replace('__compress__', compress ? 'html = window["__global__"].__compress(html);' : '');
     source = source.replace('__placeholder__', code);
-    source = source.replace('__tpl__', file.fullname);
+    source = source.replace('__tpl__', file.id);
     source = source.replace(/__global__/g, global);
     
     // 将引号替换回来，不要问我为什么知道，试出来的
