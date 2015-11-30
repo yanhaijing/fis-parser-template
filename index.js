@@ -12,7 +12,7 @@ module.exports = function(content, file, conf){
     var global = conf.global || 'template';
     var compress = conf.compress || false;
 
-    // 获取编译源码，并压缩成一行
+    // 获取编译源码
     var code = template.__compile(content).toString();
 
     code = '"use strict";var __code__ = "";' + code + ';return __code__';
@@ -26,7 +26,8 @@ module.exports = function(content, file, conf){
         .replace(/\\\"/g, '##4##')
         .replace(/\'/g, '##1##')
         .replace(/\"/g, '##3##')
-        .replace(/\n/g, '');
+        // \r 针对windows换行符(cr lf) \n 针对unix换行符(lf)
+        .replace(/[\n\r]/g, '');  
 
     var render = function render(data) {
         'use strict';
