@@ -22,10 +22,10 @@ module.exports = function(content, file, conf){
     // __##3##__ 双引号 js语句中的双引号
     // __##4##__ 转义双引号 html语句中的双引号
     code = code
-        .replace(/\\\'/g, "##2##")
-        .replace(/\\\"/g, '##4##')
-        .replace(/\'/g, '##1##')
-        .replace(/\"/g, '##3##')
+        .replace(/\\\'/g, "__##2##__")
+        .replace(/\\\"/g, '__##4##__')
+        .replace(/\'/g, '__##1##__')
+        .replace(/\"/g, '__##3##__')
         // \r 针对windows换行符(cr lf) \n 针对unix换行符(lf)
         .replace(/[\n\r]/g, '');  
 
@@ -61,10 +61,10 @@ module.exports = function(content, file, conf){
     
     // 将引号替换回来，不要问我为什么知道，试出来的
     source = source
-        .replace(/##1##/g, "\\'")
-        .replace(/##3##/g, '\\\\"')
-        .replace(/##2##/g, "\\\\\\'")
-        .replace(/##4##/g, '\\\\\\\\\\\\\\"');
+        .replace(/__##1##__/g, "\\'")
+        .replace(/__##3##__/g, '\\\\"')
+        .replace(/__##2##__/g, "\\\\\\'")
+        .replace(/__##4##__/g, '\\\\\\\\\\\\\\"');
 
     return source;
 };
