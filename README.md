@@ -7,6 +7,9 @@
 	$ npm install -g fis-parser-template
 
 ##配置
+配置参数同[template.js](https://github.com/yanhaijing/template.js/blob/master/doc/api.md#templateconfig)参数一样，其中global参数代表template.js的全局名称。
+
+fis2
 
     //设置编译器
     fis.config.merge({
@@ -30,6 +33,17 @@
         }
     });
 
+fis3
+
+	fis.match('**.tmpl', {
+	    parser: fis.plugin('template', {
+	        sTag: '<#',
+	        eTag: '#>',
+	        global: 'template'
+	    }),
+	    isJsLike: true,
+	    release : false
+	});
 ##报告问题
 
 - [Issues](https://github.com/yanhaijing/fis-parser-template/issues "report question")
