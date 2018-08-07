@@ -60,6 +60,11 @@ fis3
 
 [更新日志](CHANGELOG.md)
 
+## 谁在使用
+
+- [jr58](https://github.com/mengxiangrui/jr58)
+- [fis3-base](https://github.com/yanhaijing/fis3-base)
+
 ## 相关链接
 
 - [fis](http://fis.baidu.com/)
