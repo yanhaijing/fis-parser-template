@@ -1,4 +1,4 @@
-# fis-parser-template [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/yanhaijing/fis-parser-template/blob/master/MIT-LICENSE.txt)
+# fis-parser-template [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/yanhaijing/fis-parser-template/blob/master/LICENSE)
 
 [template.js](https://github.com/yanhaijing/template.js)的fis编译插件——一款javascript模板引擎。
 
