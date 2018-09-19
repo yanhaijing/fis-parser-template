@@ -37,8 +37,8 @@ fis3
 
 	fis.match('**.tmpl', {
 	    parser: fis.plugin('template', {
-	        sTag: '<#',
-	        eTag: '#>',
+	        sTag: '<%',
+	        eTag: '%>',
 	        global: 'template'
 	    }),
 	    isJsLike: true,

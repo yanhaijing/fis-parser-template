@@ -1,15 +1,20 @@
 {
-    "name" : "fis-parser-template",
-    "description" : "template.js的fis编译插件——一款javascript模板引擎",
-    "version" : "0.3.3",
+    "name": "fis-parser-template",
+    "description": "template.js的fis编译插件——一款javascript模板引擎",
+    "version": "0.3.3",
     "author": {
         "name": "yanhaijing",
         "email": "yanhaijing@yeah.net",
         "url": "http://yanhaijing.com"
     },
-    "homepage" : "https://github.com/yanhaijing/fis-parser-template",
-    "keywords": ["fis", "fis-parser", "template", "template.js"],
-    "main" : "index.js",
+    "homepage": "https://github.com/yanhaijing/fis-parser-template",
+    "keywords": [
+        "fis",
+        "fis-parser",
+        "template",
+        "template.js"
+    ],
+    "main": "index.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/yanhaijing/fis-parser-template.git"
@@ -23,13 +28,13 @@
             "url": "https://github.com/yanhaijing/fis-parser-template/blob/master/MIT-LICENSE.txt"
         }
     ],
-    "engines" : {
-        "node" : ">= 0.8.0"
+    "engines": {
+        "node": ">= 0.8.0"
     },
-    "scripts" : {
-        "test" : "mocha test/ut --recursive"
+    "scripts": {
+        "test": "mocha test/ut --recursive"
     },
-    "dependencies" : {
-        "template_js" : "0.6.1"
+    "dependencies": {
+        "template_js": "0.6.1"
     }
 }
